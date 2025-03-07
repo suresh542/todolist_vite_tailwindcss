@@ -1,25 +1,33 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import AnalogClock from "analog-clock-react";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import TodoTaskList from "./TodoTaskList";
 
 export default function TodoList() {
-  const [addTask, setAddTask] = useState([]);
+  const [addTask, setAddTask] = useState(localStorage.getItem("todos")?JSON.parse(localStorage.getItem("todos")):[]);
+  const [taskError, setTaskError] = useState([]);
+
+  useEffect(()=>{
+    localStorage.setItem("todos",JSON.stringify(addTask))
+  },[addTask])
+
+
   console.log(addTask);
 
   const inputRef = useRef(null);
 
   const AddBtn = () => {
     const inputValue = inputRef.current.value.trim();
-    if (inputValue == "") {
-      return null;
+    if (inputValue === "") {
+      return setTaskError("Fill the Task");
     }
     const todoValue = {
       id: Date.now(),
       task: inputValue,
       isCompleted: false,
     };
+
 
     setAddTask((prev) => [...prev, todoValue]);
     inputRef.current.value = "";
@@ -91,7 +99,7 @@ export default function TodoList() {
             </div>
 
             <div className="my-3 text-sm font-bold text-red-600 px-1 absolute">
-              fill Task Details
+              {taskError}
             </div>
           </div>
           <div className="w-[30-rem] bg-white py-6 px-5 mt-10">

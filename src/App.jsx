@@ -3,6 +3,7 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import TodoList from "./TodoList/TodoList";
+import TodoListPra from "./TodoListPra/TodoListPra";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -31,7 +32,8 @@ function App() {
       </p> */}
 
       <div className="">
-        <TodoList />
+        {/* <TodoList /> */}
+        <TodoListPra/>
       </div>
     </>
   );
